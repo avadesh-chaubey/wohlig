@@ -22,7 +22,7 @@ jobs:
       env:
         KUBE_CONFIG: ${{ runner.workspace }}/kubeconfig.yaml
     - run: |-
-        gcloud auth login
+        gcloud --quiet auth configure-docker
 
     - name: Authenticate with GKE
       run: gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER_NAME }} --region ${{ secrets.GKE_REGION }}
