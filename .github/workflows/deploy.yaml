@@ -21,6 +21,8 @@ jobs:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
       env:
         KUBE_CONFIG: ${{ runner.workspace }}/kubeconfig.yaml
+    - run: |-
+        gcloud --quiet auth configure-docker
 
     - name: Authenticate with GKE
       run: gcloud container clusters get-credentials cluster-1 --zone asia-south1-a --project host-408617
