@@ -23,7 +23,7 @@ jobs:
         KUBE_CONFIG: ${{ runner.workspace }}/kubeconfig.yaml
 
     - name: Authenticate with GKE
-      run: gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER_NAME }} --region ${{ secrets.GKE_REGION }}
+      run: gcloud container clusters get-credentials cluster-1 --zone asia-south1-a --project host-408617
 
     - name: Deploy to GKE
       run: kubectl apply -f deployment.yaml
