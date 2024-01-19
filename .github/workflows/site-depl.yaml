@@ -25,22 +25,9 @@ jobs:
 #  Authenticate cluster
     - uses: google-github-actions/auth@v2
       with: 
-#         service_account: ${{ secrets.GKE_SA_KEY }}
+         service_account: 'kube-297@host-408617.iam.gserviceaccount.com'
          project_id: ${{ secrets.GKE_PROJECT }}
-         credentials_json: |
-         {
-  "type": "service_account",
-  "project_id": "host-408617",
-  "private_key_id": "4ea3e1bc9e4bb8c5f306c99205cf67f9b21dcdbb",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDKOgujwgk/VRu3\nDyinxd4fDXLpIglwfmI2EXdO/8yxcw9QrDupW3HcXX+l72iAeNcIcyEJ5tmlxc2H\nANv9Qmgcf8V+bEH11Udad2GTzH8TlSB+M1GMQZPxA6YcOQMuj20uOFTraI9WoqdN\n9mfz+BIWl8uRvppf1azK/A+NbMV/q2aNoOn+HhERA09zIjMMpFGx3QDYD3XS8bIx\nRKXngtvh1+GeOCS/BFYQyJ0MJ4NyX0TRQKc0rKkm9/RpiKercXM/SisesjMQZVq0\nYlgecX8ZK9JvJLF0NEQM3QMmSh/+hhX1zrmLXfvNhfM9C6j2lnBHR1JWiSLrGSf1\nj+lENkjnAgMBAAECggEADPv46lmxJIIo7OVWxWruQTOPKL15BxWLGPcHIFxK2F8c\nYSAl41DBRa/+wnjVzpKzr9GzxQ7i85wr/zQrBWuIA47UPEx9voFXewBsrfcBdvbq\nWeAFDbENa2Cof9BmgWaCt2boVB/n1pBL/YGWmOYMXauYzctQqyctJVbvNecbFgBq\n2U/sL5GposNazzfl018QjZSH4pMOo44EPuVMngPJE6EzsUAolioFGyid36IeudV5\nAb99u51Q6oyQ043WnZwm1YYBKlrWqcReIj/5o8v0/Kno9j2CFxJOBIVLgINkQFGk\nV3D20/iibrg8CIu4mxPE9Aw0bYvUxVufEs6Zh9zD0QKBgQD8wGEHv20G6PER19FJ\nf+/FtRHNtZbvQFCN80JzEN8QLlHnvWLQKLxKL2LpCazQLyBBxzJFhQk3Go18Yg6l\nTv+duW7m0E61ddTnDEvBxc8ec3BcvCUJHxgMt25uNHShDsgpv0EUeFM33DpDHQpo\nGZHur0nspdyXF0XpXKZofuKfNwKBgQDM020kKEBnbPVpRZCFk5Ysz1MPH9V9x+0c\nIbwFbykPzvTbpQnngNLQQSYTri7ArJZORrxvHNh+i/a4VvzkSTWuUHgHVK9kFoaa\nISMPSBe3d8y/k+f9X3vAKa0x4bl2wM5KX32ldJwywvzhoUtc7x/eiOkgpFzm9p5t\n32zIbZSb0QKBgFc9nABNnbdd3h/Xi4DALSXj6wJDJJbubx+gEJahAy2Vn2XK4/mP\npfZBRvXDBihRq+Ooevyt/9FKU/3T5tQ+YVKyt8npqtFNm7AoeVmoCmarV+RaeLoe\nRnHVOsPFTWBuNr7aKf+DzM2iMWYK9xWZhdqKHI0Xbv2j5di3xySYb2afAoGBAKkQ\nzyKsMtTr4/mb2PnY43ljPAzc2uyyrG2vDrJxmbQZwJTYOj+jXt9VFyfhe2fATWSZ\nEIqqhayWvPRVoPKR10Rl2V07snXr/fiU54qCmEjxEskDPdcvDEeGXxYwWlTCOsS6\n40xB33gq6G8ZIsq3+ldGLR+ra5+c6xKH/BPIF4UxAoGBAMkrdfzZtS2XYRBngs5i\nYQb3Wj9iR9sca+WumJrad6lN2vh9uFeT749MtU3y72c/EIIkxi7h/mi8EnEoMAae\nuKMr1meIiJJ56r94kRfKqCncQZapY8uNSaqmxEtX0mWzGf14ehrnF7n005RV38UK\nfr8plF7LNiEscLGWsrjfrDgA\n-----END PRIVATE KEY-----\n",
-  "client_email": "kube-297@host-408617.iam.gserviceaccount.com",
-  "client_id": "114419345295179422595",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/kube-297%40host-408617.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
-}
+
     # Setup gcloud CLI
     - uses: google-github-actions/setup-gcloud@v2
     #google-github-actions/setup-gcloud@master
