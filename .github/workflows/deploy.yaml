@@ -26,13 +26,13 @@ jobs:
       with:
         version: 'latest'
         install_components: gke-gcloud-auth-plugin
-    # - run: |-
-    #     gcloud components install gke-gcloud-auth-plugin
 
-    # - uses: google-github-actions/auth@v2
-    #   with: 
-    #     project_id: ${{ secrets.GKE_PROJECT }}
-    #     credentials_json: ${{ secrets.GKE_SA_KEY }}
+
+    - uses: google-github-actions/auth@v2
+      with: 
+        project_id: ${{ secrets.GKE_PROJECT }}
+        service_account: "kubernetes@kubernetes-411705.iam.gserviceaccount.com"
+        credentials_json: ${{ secrets.GKE_SA_KEY }}
     #   env: 
     #     KUBE_CONFIG: ${{ runner.workspace }}/kubeconfig.yaml
     # Setup gcloud CLI
