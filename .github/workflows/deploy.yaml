@@ -23,25 +23,22 @@ jobs:
     - uses: google-github-actions/auth@v2
       with: 
         project_id: ${{ secrets.GKE_PROJECT }}
-#        service_account: ${{ secrets.GKE_SA_KEY }}
         credentials_json: ${{ secrets.GKE_SA_KEY }}
       env: 
         KUBE_CONFIG: ${{ runner.workspace }}/kubeconfig.yaml
     # Setup gcloud CLI
     - uses: google-github-actions/setup-gcloud@v2
-    #google-github-actions/setup-gcloud@master
       with:
         version: 'latest'
-#        service_account_key: ${{ secrets.GKE_SA_KEY }}
-        project_id: ${{ secrets.GKE_PROJECT }}
-      env:
-        KUBE_CONFIG: ${{ runner.workspace }}/kubeconfig.yaml
+      #   project_id: ${{ secrets.GKE_PROJECT }}
+      # env:
+      #   KUBE_CONFIG: ${{ runner.workspace }}/kubeconfig.yaml
 
     # Configure Docker to use the gcloud command-line tool as a credential
     # helper for authentication
     - run: |-
         gcloud components install gke-gcloud-auth-plugin
-        gcloud auth activate-service-account kubernetes@kubernetes-411705.iam.gserviceaccount.com --key-file=key.json
+#        gcloud auth activate-service-account kubernetes@kubernetes-411705.iam.gserviceaccount.com --key-file=key.json
 
     # - uses: google-github-actions/get-gke-credentials@v2
     #   with:
