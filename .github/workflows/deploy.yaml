@@ -32,8 +32,8 @@ jobs:
         install_components: gke-gcloud-auth-plugin
     - uses: google-github-actions/get-gke-credentials@v2
       with:
-        cluster_name: ${{ GKE_CLUSTER }}
-        location: ${{ GKE_ZONE }}
+        cluster_name: ${{ env.GKE_CLUSTER }}
+        location: ${{ env.GKE_ZONE }}
         project_id: ${{ secrets.GKE_PROJECT }}
         use_internal_ip: 172.16.0.2
     # Build the Docker image
