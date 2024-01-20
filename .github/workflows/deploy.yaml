@@ -27,9 +27,9 @@ jobs:
       env: 
         KUBE_CONFIG: ${{ runner.workspace }}/kubeconfig.yaml
     # Setup gcloud CLI
-    - uses: google-github-actions/setup-gcloud@v2
-      with:
-        version: 'latest'
+    # - uses: google-github-actions/setup-gcloud@v2
+    #   with:
+    #     version: 'latest'
       #   project_id: ${{ secrets.GKE_PROJECT }}
       # env:
       #   KUBE_CONFIG: ${{ runner.workspace }}/kubeconfig.yaml
