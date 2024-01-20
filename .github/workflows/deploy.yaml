@@ -62,7 +62,7 @@ jobs:
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |-
-        cat ${{ runner.workspace }}/kubeconfig.yaml | docker login -u _json_key --password-stdin https://gcr.io
+        cat ${{ secrets.GKE_SA_KEY }} | docker login -u _json_key --password-stdin https://gcr.io
         docker push "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA"
     # Set up kustomize
     - name: Set up Kustomize
