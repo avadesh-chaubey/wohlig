@@ -23,8 +23,8 @@ jobs:
     - uses: google-github-actions/auth@v2
       with: 
         project_id: ${{ secrets.GKE_PROJECT }}
-#        service_account:
-        credentials_json: key.json
+        service_account: ${{ secrets.GKE_SA_KEY }}
+#        credentials_json: key.json
     # Setup gcloud CLI
     - uses: google-github-actions/setup-gcloud@v2
     #google-github-actions/setup-gcloud@master
