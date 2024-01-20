@@ -9,7 +9,7 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 app.get('/', (req, res) => {
-  res.send('Nginx Page downloading server');
+  res.send('Nginx Page downloading server from cloud');
 });
 
 app.listen(PORT, HOST, () => {
