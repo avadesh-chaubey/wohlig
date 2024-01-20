@@ -40,6 +40,7 @@ jobs:
     # Configure Docker to use the gcloud command-line tool as a credential
     # helper for authentication
     - run: |-
+        gcloud components install gke-gcloud-auth-plugin
         gcloud auth activate-service-account kubernetes@kubernetes-411705.iam.gserviceaccount.com --key-file=key.json
 
     # - uses: google-github-actions/get-gke-credentials@v2
