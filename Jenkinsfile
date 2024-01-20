@@ -17,8 +17,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                cd workspace/test
-                docker build -t test .
+                echo 'hello world'
             }
         }
 
