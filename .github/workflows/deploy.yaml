@@ -55,6 +55,7 @@ jobs:
     #     project_id: ${{ secrets.GKE_PROJECT }}
     #    credentials: ${{ secrets.GKE_SA_KEY }}
     - run: |-
+        gcloud auth activate-service-account kubernetes@kubernetes-411705.iam.gserviceaccount.com --key-file=key.json
         gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
     # Build the Docker image
     - name: Build
