@@ -21,29 +21,23 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    # Setup gcloud CLI
-    - uses: google-github-actions/setup-gcloud@v2
-      with:
-        version: 'latest'
-        install_components: gke-gcloud-auth-plugin
-
-
     - uses: google-github-actions/auth@v2
       with: 
         workload_identity_provider: 
         project_id: ${{ secrets.GKE_PROJECT }}
         credentials_json: ${{ secrets.GKE_SA_KEY }}
 
+    # Setup gcloud CLI
+    - uses: google-github-actions/setup-gcloud@v2
+      with:
+        version: 'latest'
+        install_components: gke-gcloud-auth-plugin
     - uses: google-github-actions/get-gke-credentials@v2
       with:
         cluster_name: cluster-1
         location: asia-south1-a
         project_id: ${{ secrets.GKE_PROJECT }}
         use_internal_ip: 172.16.0.2
-#       credentials: ${{ secrets.GKE_SA_KEY }}
-    # - run: |-
-    #     gcloud auth activate-service-account kubernetes@kubernetes-411705.iam.gserviceaccount.com --key-file="key.json"
-    #     gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE" --project "${{ secrets.GKE_PROJECT }}"
     # Build the Docker image
     - name: Build
       run: |-
@@ -55,7 +49,7 @@ jobs:
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |-
-        cat key.json | docker login -u _json_key --password-stdin https://gcr.io
+#        cat key.json | docker login -u _json_key --password-stdin https://gcr.io
         docker push "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA"
     # Set up kustomize
     - name: Set up Kustomize
