@@ -25,8 +25,9 @@ jobs:
     - uses: google-github-actions/setup-gcloud@v2
       with:
         version: 'latest'
-    - run: |-
-        gcloud components install gke-gcloud-auth-plugin
+        install_components: gke-gcloud-auth-plugin
+    # - run: |-
+    #     gcloud components install gke-gcloud-auth-plugin
 
     # - uses: google-github-actions/auth@v2
     #   with: 
@@ -55,7 +56,7 @@ jobs:
     #     project_id: ${{ secrets.GKE_PROJECT }}
     #    credentials: ${{ secrets.GKE_SA_KEY }}
     - run: |-
-        gcloud auth activate-service-account kubernetes@kubernetes-411705.iam.gserviceaccount.com --key-file="${{ secrets.GKE_SA_KEY }}"
+        gcloud auth activate-service-account kubernetes@kubernetes-411705.iam.gserviceaccount.com --key-file="key.json"
         gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE" --project "${{ secrets.GKE_PROJECT }}"
     # Build the Docker image
     - name: Build
