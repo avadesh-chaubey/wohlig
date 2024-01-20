@@ -25,9 +25,8 @@ spec:
   selector:
     app: site
   ports:
-    - name: site
-      protocol: TCP
+  -   protocol: TCP
       port: 8080
       targetPort: 8080
-      nodePort: 32000
+      nodePort: 31000
   type: NodePort
