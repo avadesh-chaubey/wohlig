@@ -18,7 +18,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Add your build steps here
-                echo hello
+                docker build .
             }
         }
 
