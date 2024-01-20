@@ -40,6 +40,7 @@ jobs:
       with:
         cluster_name: cluster-1
         location: asia-south1-a
+        project_id: ${{ secrets.GKE_PROJECT }}
 #        credentials: ${{ secrets.GKE_SA_KEY }}
     # Get the GKE credentials so we can deploy to the cluster
     # - run: |-
