@@ -3,13 +3,13 @@
 const express = require('express');
 
 // Constants
-const PORT = 8080;
+const PORT = 80;
 const HOST = '0.0.0.0';
 
 // App
 const app = express();
 app.get('/', (req, res) => {
-  res.send('Hello World, This code is being deployed throgh cicd pipline');
+  res.send('Nginx Page');
 });
 
 app.listen(PORT, HOST, () => {

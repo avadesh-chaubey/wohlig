@@ -9,8 +9,8 @@ env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: cluster-1    # TODO: update to cluster name
   GKE_ZONE: asia-south1-a   # TODO: update to cluster zone
-  DEPLOYMENT_NAME: site # TODO: update to deployment name
-  IMAGE: site
+  DEPLOYMENT_NAME: nginx # TODO: update to deployment name
+  IMAGE: nginx
 
 jobs:
   setup-build-publish-deploy:

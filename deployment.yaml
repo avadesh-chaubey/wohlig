@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: site
+  name: nginx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: site
+      app: nginx
   template:
     metadata:
       labels:
-        app: site
+        app: nginx
     spec:
       containers:
         - name: site
@@ -20,12 +20,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: site-srv
+  name: nginx
 spec:
   selector:
-    app: site
+    app: nginx
   ports:
   -   protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 80
+      targetPort: 80
   type: ClusterIP

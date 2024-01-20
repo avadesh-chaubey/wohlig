@@ -16,3 +16,11 @@ spec:
             name: site-srv
             port:
               number: 8080
+      - path: test
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx
+            port:
+              number: 80
+
