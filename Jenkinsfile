@@ -17,7 +17,6 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Add your build steps here
                 cd workspace/test
                 docker build -t test .
             }
