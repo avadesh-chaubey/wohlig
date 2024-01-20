@@ -20,6 +20,14 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+
+    # Setup gcloud CLI
+    - uses: google-github-actions/setup-gcloud@v2
+      with:
+        version: 'latest'
+    - run: |-
+        gcloud components install gke-gcloud-auth-plugin
+
     - uses: google-github-actions/auth@v2
       with: 
         project_id: ${{ secrets.GKE_PROJECT }}
@@ -36,8 +44,8 @@ jobs:
 
     # Configure Docker to use the gcloud command-line tool as a credential
     # helper for authentication
-    - run: |-
-        gcloud components install gke-gcloud-auth-plugin
+    # - run: |-
+    #     gcloud components install gke-gcloud-auth-plugin
 #        gcloud auth activate-service-account kubernetes@kubernetes-411705.iam.gserviceaccount.com --key-file=key.json
 
     # - uses: google-github-actions/get-gke-credentials@v2
