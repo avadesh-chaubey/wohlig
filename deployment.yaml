@@ -26,6 +26,7 @@ spec:
     app: site
   ports:
   -   protocol: TCP
+      port: 8081
       targetPort: 8081
       nodePort: 31000
   type: NodePort
