@@ -18,7 +18,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Add your build steps here
-                docker build .
+                docker build -t test .
             }
         }
 
@@ -34,7 +34,7 @@ pipeline {
 
                     // Deploy to GKE using kubectl
                     sh """
-                        kubectl apply -f path/to/kubernetes/deployment.yaml
+                        kubectl apply -f deployment.yaml
                     """
                 }
             }
