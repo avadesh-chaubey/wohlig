@@ -32,33 +32,18 @@ jobs:
       with: 
         workload_identity_provider: 
         project_id: ${{ secrets.GKE_PROJECT }}
- #       service_account: "kubernetes@kubernetes-411705.iam.gserviceaccount.com"
         credentials_json: ${{ secrets.GKE_SA_KEY }}
-    #   env: 
-    #     KUBE_CONFIG: ${{ runner.workspace }}/kubeconfig.yaml
-    # Setup gcloud CLI
-    # - uses: google-github-actions/setup-gcloud@v2
-    #   with:
-    #     version: 'latest'
-      #   project_id: ${{ secrets.GKE_PROJECT }}
-      # env:
-      #   KUBE_CONFIG: ${{ runner.workspace }}/kubeconfig.yaml
 
-    # Configure Docker to use the gcloud command-line tool as a credential
-    # helper for authentication
+    - uses: google-github-actions/get-gke-credentials@v2
+      with:
+        cluster_name: cluster-1
+        location: asia-south1-a
+        project_id: ${{ secrets.GKE_PROJECT }}
+        use_internal_ip: 172.16.0.2
+#       credentials: ${{ secrets.GKE_SA_KEY }}
     # - run: |-
-    #     gcloud components install gke-gcloud-auth-plugin
-#        gcloud auth activate-service-account kubernetes@kubernetes-411705.iam.gserviceaccount.com --key-file=key.json
-
-    # - uses: google-github-actions/get-gke-credentials@v2
-    #   with:
-    #     cluster_name: cluster-1
-    #     location: asia-south1-a
-    #     project_id: ${{ secrets.GKE_PROJECT }}
-    #    credentials: ${{ secrets.GKE_SA_KEY }}
-    - run: |-
-        gcloud auth activate-service-account kubernetes@kubernetes-411705.iam.gserviceaccount.com --key-file="key.json"
-        gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE" --project "${{ secrets.GKE_PROJECT }}"
+    #     gcloud auth activate-service-account kubernetes@kubernetes-411705.iam.gserviceaccount.com --key-file="key.json"
+    #     gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE" --project "${{ secrets.GKE_PROJECT }}"
     # Build the Docker image
     - name: Build
       run: |-
