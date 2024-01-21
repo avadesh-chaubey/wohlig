@@ -48,7 +48,7 @@ jobs:
     - name: Publish
       run: |-
         gcloud auth configure-docker
-        docker login https://gcr.io
+        docker login https://asia.gcr.io
         docker push "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA"
     # Set up kustomize
     - name: Set up Kustomize
