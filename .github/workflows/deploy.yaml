@@ -47,8 +47,8 @@ jobs:
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |-
-        gcloud --quiet auth configure-docker asia-south1-docker.pkg.dev
-        docker login https://asia.gcr.io
+        gcloud --quiet auth configure-docker
+        docker login https://gcr.io
         docker push "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA"
     # Set up kustomize
     - name: Set up Kustomize
