@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: site
-          image: gcr.io/PROJECT_ID/IMAGE:TAG
+          image: LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG
 
 ---
 apiVersion: v1
