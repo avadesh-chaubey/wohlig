@@ -21,7 +21,7 @@ env:
   GAR_LOCATION: asia-south1 # TODO: update region of the Artifact Registry
   GKE_CLUSTER: cluster-1    # TODO: update to cluster name
   GKE_ZONE: asia-south1-a   # TODO: update to cluster zone
-  DEPLOYMENT_NAME: gke-test # TODO: update to deployment name
+  DEPLOYMENT_NAME: site # TODO: update to deployment name
   REPOSITORY: samples # TODO: update to Artifact Registry docker repository
   IMAGE: site
 
@@ -38,16 +38,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-
-    # Configure Workload Identity Federation and generate an access token.
-    # - id: 'auth'
-    #   name: 'Authenticate to Google Cloud'
-    #   uses: 'google-github-actions/auth@v0'
-    #   with:
-    #     token_format: 'access_token'
-    #     workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
-    #     service_account: 'deployer@project1-408709.iam.gserviceaccount.com'
-
     # Alternative option - authentication via credentials json
     - id: 'auth'
       uses: 'google-github-actions/auth@v2'
@@ -58,7 +48,6 @@ jobs:
       run: |-
         gcloud --quiet auth configure-docker asia-south1-docker.pkg.dev
         docker login
-#        echo ${{steps.auth.outputs.access_token}} | docker login -u oauth2accesstoken --password-stdin https://$GAR_LOCATION-docker.pkg.dev
     # Get the GKE credentials so we can deploy to the cluster
     - name: Set up GKE credentials
       uses: google-github-actions/get-gke-credentials@v2
