@@ -88,6 +88,7 @@ jobs:
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
+        aws eks update-kubeconfig --region ap-south-1 --name k8s-cluster
         # replacing the image name in the k8s template
         ./kustomize edit set image site=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         ./kustomize build . | kubectl apply -f -
