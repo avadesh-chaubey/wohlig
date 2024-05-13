@@ -77,20 +77,30 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-    # - name: Deploy
-    #   run: |-
-    #     aws eks update-kubeconfig --region ap-south-1 --name k8s-cluster
-
-    - name: Set up Kustomize
-      run: |-
-        curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
-    # Deploy the Docker image to the GKE cluster
-    - name: Deploy
-      run: |-
         aws eks update-kubeconfig --region ap-south-1 --name k8s-cluster
-        # replacing the image name in the k8s template
+        curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
         kustomize edit set image nginx=211125773797.dkr.ecr.ap-south-1.amazonaws.com/my-ecr-repo:$IMAGE_TAG
         kustomize build . | kubectl apply -f -
         kubectl rollout status deployment/$DEPLOYMENT_NAME
         kubectl get services -o wide
+    # - name: Deploy
+    #   run: |-
+    #     aws eks update-kubeconfig --region ap-south-1 --name k8s-cluster
+
+    # - name: Set up Kustomize
+    #   env:
+    #     # ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+    #     # IMAGE_TAG: ${{ github.sha }} 
+        
+    #   run: |-
+    #     curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+    # # Deploy the Docker image to the GKE cluster
+    # - name: Deploy
+    #   run: |-
+    #     aws eks update-kubeconfig --region ap-south-1 --name k8s-cluster
+    #     # replacing the image name in the k8s template
+    #     kustomize edit set image nginx=211125773797.dkr.ecr.ap-south-1.amazonaws.com/my-ecr-repo:$IMAGE_TAG
+    #     kustomize build . | kubectl apply -f -
+    #     kubectl rollout status deployment/$DEPLOYMENT_NAME
+    #     kubectl get services -o wide
         
