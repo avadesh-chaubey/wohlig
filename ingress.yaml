@@ -13,8 +13,8 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: nginx
+            name: app-service
             port:
-              number: 8080
+              number: 80
 
 
