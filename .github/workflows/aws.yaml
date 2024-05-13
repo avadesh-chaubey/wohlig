@@ -78,11 +78,12 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
         aws eks update-kubeconfig --region ap-south-1 --name k8s-cluster
-        curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
-        kustomize edit set image nginx=211125773797.dkr.ecr.ap-south-1.amazonaws.com/my-ecr-repo:$IMAGE_TAG
-        kustomize build . | kubectl apply -f -
+        kubectl set image deploy nginx nginx=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         kubectl rollout status deployment/$DEPLOYMENT_NAME
         kubectl get services -o wide
+        echo $GITHUB_OUTPUT
+        echo "$GITHUB_OUTPUT"
+        echo '$GITHUB_OUTPUT'
     # - name: Deploy
     #   run: |-
     #     aws eks update-kubeconfig --region ap-south-1 --name k8s-cluster
