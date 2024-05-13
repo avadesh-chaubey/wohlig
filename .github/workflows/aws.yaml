@@ -93,10 +93,10 @@ jobs:
     #     cluster: ${{ env.ECS_CLUSTER }}
         # wait-for-service-stability: true
             # Set up kustomize
-    - name: Set up kubectl
-      run: |-
-        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-        sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+    # - name: Set up kubectl
+    #   run: |-
+    #     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    #     sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
