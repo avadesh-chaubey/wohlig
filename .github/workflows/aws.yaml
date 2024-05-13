@@ -37,7 +37,7 @@ env:
   ECS_CLUSTER: k8s-cluster                 # set this to your Amazon ECS cluster name
 #  ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
-  IMAGE: site           # set this to the name of the container in the
+             # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
   DEPLOYMENT_NAME: nginx
 
@@ -89,7 +89,7 @@ jobs:
     - name: Deploy
       run: |-
         # replacing the image name in the k8s template
-        ./kustomize edit set image ECR_REGISTRY/ECR_REPOSITORY:IMAGE_TAG=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        ./kustomize edit set image site=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         ./kustomize build . | kubectl apply -f -
         kubectl rollout status deployment/$DEPLOYMENT_NAME
         kubectl get services -o wide
