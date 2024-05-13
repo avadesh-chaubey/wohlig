@@ -90,6 +90,9 @@ jobs:
     #     curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
     # # Deploy the Docker image to the GKE cluster
     - name: Deploy
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        IMAGE_TAG: ${{ github.sha }}
       run: |-
         aws eks update-kubeconfig --region ap-south-1 --name k8s-cluster
         kubectl set image deploy nginx nginx=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
