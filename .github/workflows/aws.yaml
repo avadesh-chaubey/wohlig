@@ -64,7 +64,6 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
-
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
@@ -90,8 +89,8 @@ jobs:
     #   run: |-
     #     curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
     # # Deploy the Docker image to the GKE cluster
-    # - name: Deploy
-    #   run: |-
+    - name: Deploy
+      run: |-
         aws eks update-kubeconfig --region ap-south-1 --name k8s-cluster
         kubectl set image deploy nginx nginx=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         kubectl rollout status deployment/$DEPLOYMENT_NAME
