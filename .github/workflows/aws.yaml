@@ -90,8 +90,8 @@ jobs:
       run: |-
         aws eks update-kubeconfig --region ap-south-1 --name k8s-cluster
         # replacing the image name in the k8s template
-        ./kustomize edit set image nginx=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        ./kustomize build . | kubectl apply -f -
+        kustomize edit set image nginx=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        kustomize build . | kubectl apply -f -
         kubectl rollout status deployment/$DEPLOYMENT_NAME
         kubectl get services -o wide
         
