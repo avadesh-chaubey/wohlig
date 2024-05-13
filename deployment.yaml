@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
         - name: site
-          image: 211125773797.dkr.ecr.ap-south-1.amazonaws.com/my-ecr-repo/my-ecr-repo:$IMAGE_TAG
+          image: ECR_REGISTRY/ECR_REPOSITORY:IMAGE_TAG
