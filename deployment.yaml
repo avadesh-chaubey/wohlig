@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: site
-          image: 211125773797.dkr.ecr.ap-south-1.amazonaws.com/my-ecr-repo/my-ecr-repo:508b885e4c5cca97f7d127f8f7d9f5e97d7be589
+          image: 211125773797.dkr.ecr.ap-south-1.amazonaws.com/my-ecr-repo/my-ecr-repo:08f4116887438853e8ffea0065dd221189f8caa8
 apiVersion: v1
 kind: Service
 metadata:
