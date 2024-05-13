@@ -80,3 +80,4 @@ jobs:
       run: |-
         aws eks update-kubeconfig --region ap-south-1 --name eks-cluster
         kubectl apply -f deployment.yaml
+        kubectl apply -f svc.yaml
