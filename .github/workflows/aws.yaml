@@ -82,8 +82,10 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
       run: |-
+        curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
         aws eks update-kubeconfig --region ap-south-1 --name k8s-cluster
-        kubectl set image deploy nginx nginx=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        kustomize edit set image nginx=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        kustomize build . | kubectl apply -f -
         kubectl rollout status deployment/$DEPLOYMENT_NAME
         kubectl get services -o wide
         
