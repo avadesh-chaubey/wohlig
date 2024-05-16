@@ -34,12 +34,12 @@ env:
   AWS_REGION: ap-south-1                   # set this to your preferred AWS region, e.g. us-west-1
   ECR_REPOSITORY: my-ecr-repo           # set this to your Amazon ECR repository name
 #  ECS_SERVICE: MY_ECS_SERVICE                 # set this to your Amazon ECS service name
-  ECS_CLUSTER: k8s-cluster                 # set this to your Amazon ECS cluster name
+  EKS_CLUSTER: eks-cluster                 # set this to your Amazon ECS cluster name
 #  ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
              # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
-  DEPLOYMENT_NAME: nginx
+  DEPLOYMENT_NAME: node
 
 permissions:
   contents: read
@@ -83,8 +83,8 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
       run: |-
         curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
-        aws eks update-kubeconfig --region ap-south-1 --name k8s-cluster
-        kustomize edit set image nginx=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        aws eks update-kubeconfig --region ap-south-1 --name $EKS_CLUSTER
+        kustomize edit set image $DEPLOYMENT_NAME=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         kustomize build . | kubectl apply -f -
         kubectl rollout status deployment/$DEPLOYMENT_NAME
         kubectl get services -o wide

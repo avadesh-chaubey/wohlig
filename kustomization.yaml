@@ -2,3 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - deployment.yaml
+images:
+- name: nginx
+  newName: 211125773797.dkr.ecr.ap-south-1.amazonaws.com/my-ecr-repo
+  newTag: 7c6fa28e6cf0a144ec00e69e2d90253767173e54
