@@ -24,7 +24,7 @@
 #    See the documentation for each action used below for the recommended IAM policies for this IAM user,
 #    and best practices on handling the access key credentials.
 
-name: Deploy to Amazon ECS
+name: "Deploy to Amazon EKS"
 
 on:
   push:
@@ -32,9 +32,9 @@ on:
 
 env:
   AWS_REGION: ap-south-1                   # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: my-ecr-repo           # set this to your Amazon ECR repository name
+  REPOSITORY_URI: 211125773797.dkr.ecr.ap-south-1.amazonaws.com/node          # set this to your Amazon ECR repository name
 #  ECS_SERVICE: MY_ECS_SERVICE                 # set this to your Amazon ECS service name
-  EKS_CLUSTER: eks-cluster                 # set this to your Amazon ECS cluster name
+  EKS_CLUSTER: k8s                 # set this to your Amazon ECS cluster name
 #  ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
              # set this to the name of the container in the
@@ -54,6 +54,24 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: Build, tag
+      id: build-image
+      run: docker build -t ${{ env.REPOSITORY_URI }}:${{ github.sha }} .
+
+    - name: Scan image with Trivy
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: ${{ env.REPOSITORY_URI }}:${{ github.sha }}
+        format: "table"
+        severity: "CRITICAL,HIGH"
+        exit-code: 1
+    - name: Check Docker best practices with Dockle
+      uses: erzz/dockle-action@v1
+      with:
+        image: ${{ env.REPOSITORY_URI }}:${{ github.sha }}
+        failure-threshold: fatal
+        exit-code: 1
+        
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
@@ -64,27 +82,16 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
-    - name: Build, tag, and push image to Amazon ECR
-      id: build-image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ github.sha }}
-      run: |
-        # Build a docker container and
-        # push it to ECR so that it can
-        # be deployed to ECS.
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+    - name: push image to Amazon ECR
+      run: docker push ${{ env.REPOSITORY_URI }}:${{ github.sha }}
+
 
     - name: Deploy
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ github.sha }}
       run: |-
         curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
-        aws eks update-kubeconfig --region ap-south-1 --name $EKS_CLUSTER
-        kustomize edit set image $DEPLOYMENT_NAME=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER
+        kustomize edit set image $DEPLOYMENT_NAME=${{ env.REPOSITORY_URI }}:${{ github.sha }}
         kustomize build . | kubectl apply -f -
         kubectl rollout status deployment/$DEPLOYMENT_NAME
         kubectl get services -o wide
