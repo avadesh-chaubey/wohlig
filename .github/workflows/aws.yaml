@@ -89,10 +89,8 @@ jobs:
 
     - name: Deploy
       run: |-
-        curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
         aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER
-        kustomize edit set image $DEPLOYMENT_NAME=${{ env.REPOSITORY_URI }}:${{ github.sha }}
-        kustomize build . | kubectl apply -f -
+        kubectl set image deploy $DEPLOYMENT_NAME $DEPLOYMENT_NAME=${{ env.REPOSITORY_URI }}:${{ github.sha }}
         kubectl rollout status deployment/$DEPLOYMENT_NAME
         kubectl get services -o wide
         

@@ -9,7 +9,7 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 app.get('/', (req, res) => {
-  res.send('Nginx Page from terraform From v5');
+  res.send('Nginx Page from terraform From trivy');
 });
 
 app.listen(PORT, HOST, () => {
